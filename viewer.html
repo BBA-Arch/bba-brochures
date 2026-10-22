@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brochure | Bringhurst &amp; Baer Architects</title>
+<link rel="icon" href="/assets/img/bba-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<style>
+body { min-height: 100vh; display: flex; flex-direction: column; }
+.vbar { border-bottom: 1px solid var(--rule); background: var(--ground); }
+.vbar .wrap { max-width: 1280px; padding-top: 14px; padding-bottom: 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.vbar .left { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+.back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 16px; color: var(--ink); text-decoration: none; }
+.vbar h1 { margin: 0; font-size: 22px; font-weight: 700; font-stretch: 118%; letter-spacing: -0.01em; }
+.vbar .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { min-height: 44px; padding: 10px 18px; font-family: inherit; font-size: 16px; font-weight: 500; color: var(--ink); background: transparent; border: 1.5px solid var(--ink); border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+.btn.primary { font-weight: 700; background: var(--brand); border-color: var(--brand); }
+.dl { border-bottom: 1px solid var(--rule); background: #EBEEEF; }
+.dl .wrap { max-width: 1280px; padding-top: 28px; padding-bottom: 28px; display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-end; }
+.dl h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; font-stretch: 112%; }
+.dl p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--graphite); }
+.field { display: flex; flex-direction: column; gap: 6px; flex: 1 1 190px; }
+.field label { font-size: 14px; font-weight: 600; }
+.field input { min-height: 44px; padding: 10px 12px; font-family: inherit; font-size: 16px; border: 1.5px solid var(--graphite); border-radius: 2px; background: var(--paper); }
+.stage { flex: 1 1 auto; background: var(--stage); padding: 48px 24px 32px; display: flex; flex-direction: column; align-items: center; gap: 28px; container-type: inline-size; container-name: book; }
+.zoomport { width: 100%; }
+.zoomport.zoomed { overflow: auto; max-height: 78vh; }
+.zoomer { width: 100%; margin: 0 auto; }
+.zoomed .zoomer { width: fit-content; }
+.bookWide { display: none; filter: drop-shadow(0 18px 28px rgba(0,0,0,.35)); }
+.bk { position: relative; margin: 0 auto; width: 840px; max-width: 100%; aspect-ratio: 1224 / 792; perspective: 2600px; }
+.zoomed .bk { max-width: none; }
+.leaf { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; transform-origin: left center; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.45,.05,.3,1); }
+.face { position: absolute; inset: 0; overflow: hidden; background: var(--paper); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.face.back { transform: rotateY(180deg); }
+.face img, .pg img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.face::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.face.front::after { background: linear-gradient(to right, rgba(0,0,0,.30) 0, rgba(0,0,0,.12) 3%, rgba(0,0,0,.04) 8%, rgba(0,0,0,0) 14%); }
+.face.back::after { background: linear-gradient(to left, rgba(0,0,0,.30) 0, rgba(0,0,0,.12) 3%, rgba(0,0,0,.04) 8%, rgba(0,0,0,0) 14%); }
+.spine { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35), rgba(0,0,0,.15)); z-index: 15; pointer-events: none; }
+.bookNarrow { position: relative; overflow: hidden; width: fit-content; max-width: 100%; margin: 0 auto; filter: drop-shadow(0 18px 28px rgba(0,0,0,.35)); }
+.pg { margin: 0 auto; width: 420px; max-width: 100%; aspect-ratio: 612 / 792; background: var(--paper); }
+.zoomed .pg { max-width: none; }
+.pg[hidden] { display: none; }
+@container book (min-width: 900px) { .bookWide { display: block; } .bookNarrow { display: none; } }
+@keyframes curlA { 0% { clip-path: polygon(100% 0,100% 0,100% 100%,100% 100%) } 50% { clip-path: polygon(56% 0,100% 0,100% 100%,30% 100%) } 100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%) } }
+@keyframes curlC { 0% { clip-path: polygon(0 0,0 0,0 100%,0 100%) } 50% { clip-path: polygon(0 0,44% 0,70% 100%,0 100%) } 100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%) } }
+.curlA { animation: curlA .9s cubic-bezier(.45,.05,.3,1) both; }
+.curlC { animation: curlC .9s cubic-bezier(.45,.05,.3,1) both; }
+.fold { position: absolute; top: -4%; bottom: -4%; left: 100%; width: 24%; pointer-events: none; opacity: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,.22) 30%, rgba(255,255,255,.9) 52%, rgba(214,219,221,.95) 64%, rgba(0,0,0,.28) 82%, rgba(0,0,0,0) 100%); transform: skewX(-10deg); }
+.fold.prev { transform: skewX(10deg) scaleX(-1); }
+@keyframes sweepN { 0% { left: 100%; opacity: 0 } 8% { opacity: 1 } 92% { opacity: 1 } 100% { left: -24%; opacity: 0 } }
+@keyframes sweepP { 0% { left: -24%; opacity: 0 } 8% { opacity: 1 } 92% { opacity: 1 } 100% { left: 100%; opacity: 0 } }
+.fold.goN { animation: sweepN .9s cubic-bezier(.45,.05,.3,1); }
+.fold.goP { animation: sweepP .9s cubic-bezier(.45,.05,.3,1); }
+@media (prefers-reduced-motion: reduce) { .leaf { transition: none; } .curlA, .curlC, .fold.goN, .fold.goP { animation: none; } }
+.controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px 20px; color: #F7F8F8; }
+.round { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; color: #F7F8F8; background: transparent; border: 1.5px solid #8A938F; border-radius: 999px; cursor: pointer; font-family: inherit; }
+.round:disabled, .pill:disabled { opacity: .35; cursor: default; }
+.pill { min-height: 44px; padding: 0 14px; color: #F7F8F8; background: transparent; border: 1.5px solid #8A938F; border-radius: 999px; cursor: pointer; font-family: inherit; font-size: 15px; }
+.zoomgroup { display: flex; align-items: center; gap: 6px; padding-left: 16px; border-left: 1px solid #5B6461; }
+.thumbs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tb { min-width: 48px; min-height: 44px; padding: 8px 12px; font-family: inherit; font-size: 14px; color: #F7F8F8; border-radius: 2px; cursor: pointer; background: transparent; border: 1.5px solid #5B6461; }
+.tb.on { background: var(--brand-deep); border-color: var(--brand); }
+@container book (min-width: 900px) { .tb.mate { background: var(--brand-deep); border-color: var(--brand); } }
+.missing { color: #F7F8F8; font-size: 18px; text-align: center; max-width: 520px; line-height: 1.5; }
+.missing a { color: #5CD0F7; }
+</style>
+</head>
+<body>
+<div class="vbar"><div class="wrap">
+<div class="left">
+<a class="back" id="back" href="/"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6 L9 12 L15 18"/></svg>All brochures</a>
+<h1 id="title">Brochure</h1>
+</div>
+<div class="actions">
+<button type="button" class="btn" id="copy">Copy link</button>
+<button type="button" class="btn primary" id="open-dl" aria-expanded="false" aria-controls="dl">Download PDF</button>
+</div>
+</div></div>
+
+<section class="dl" id="dl" hidden aria-label="Download the PDF"><div class="wrap" id="dl-body"></div></section>
+
+<main class="stage" id="stage" aria-label="Brochure pages">
+<div class="zoomport" id="zoomport"><div class="zoomer" id="zoomer">
+<div class="bookWide"><div class="bk" id="book"></div></div>
+<div class="bookNarrow" id="narrow"></div>
+</div></div>
+<div class="controls">
+<button type="button" class="round" id="prev" aria-label="Previous page"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6 L9 12 L15 18"/></svg></button>
+<div aria-live="polite" id="label" style="min-width:140px;text-align:center;font-size:16px"></div>
+<button type="button" class="round" id="next" aria-label="Next page"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 L15 12 L9 18"/></svg></button>
+<div class="zoomgroup" role="group" aria-label="Zoom">
+<button type="button" class="round" id="zout" aria-label="Zoom out" style="width:44px;height:44px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 L21 21 M7.5 10.5 H13.5"/></svg></button>
+<span id="zlabel" aria-live="polite" style="min-width:52px;text-align:center;font-size:15px">100%</span>
+<button type="button" class="round" id="zin" aria-label="Zoom in" style="width:44px;height:44px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 L21 21 M7.5 10.5 H13.5 M10.5 7.5 V13.5"/></svg></button>
+<button type="button" class="pill" id="zfit">Fit</button>
+</div>
+</div>
+<nav class="thumbs" id="thumbs" aria-label="Jump to pages"></nav>
+</main>
+<script src="/site-config.js"></script>
+<script src="/assets/js/viewer.js"></script>
+</body>
+</html>

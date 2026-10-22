@@ -1,0 +1,168 @@
+{
+  "sectors": [
+    "firm",
+    "resort & hospitality",
+    "retail & restaurant",
+    "master & site planning",
+    "multifamily housing",
+    "long-term care",
+    "financial buildings",
+    "custom residential",
+    "light industrial",
+    "healthcare"
+  ],
+  "brochures": [
+    {
+      "id": "commercial",
+      "title": "Commercial Architecture",
+      "sector": "firm",
+      "also": [
+        "retail & restaurant",
+        "resort & hospitality",
+        "multifamily housing",
+        "master & site planning",
+        "financial buildings",
+        "healthcare"
+      ],
+      "visible": true,
+      "description": "Nine projects across retail, hospitality, housing, office, planning, and healthcare, including W&L Subaru, Black Desert Resort, and the award-winning Cutalong Golf Clubhouse.",
+      "pdf": "brochures/commercial/BBA-commercial.pdf",
+      "pages": [
+        "Cover: Commercial Architecture, Introduction and Brief Portfolio",
+        "Page 2: About BBA Architects, our mission, and our expertise",
+        "Page 3: W&L Subaru automotive dealership",
+        "Page 4: Pinpoint Federal Credit Union new branch office",
+        "Page 5: Black Desert Resort, mixed-use retail and resort and hospitality",
+        "Page 6: The Grove at Thomson Farms apartments",
+        "Page 7: Sandy City Center office building",
+        "Page 8: Mountain Valley Village master planning, mixed-use development",
+        "Page 9: South Bridge Center shell retail and tenant improvement",
+        "Page 10: Cutalong Golf Clubhouse",
+        "Page 11: Evangelical Community Hospital MRI unit",
+        "Back cover: Thank you, next steps, and BBA contact information"
+      ],
+      "folder": "brochures/commercial/pages"
+    },
+    {
+      "id": "multifamily",
+      "title": "Multifamily Housing",
+      "sector": "multifamily housing",
+      "visible": true,
+      "description": "Senior living, apartments, condominiums, and mixed-use housing, including Heather Court memory care, The Grove at Thomson Farms, and Ogden Junction.",
+      "pdf": "brochures/multifamily/BBA-multifamily.pdf",
+      "pages": [
+        "Cover: MultiFamily, Introduction and Brief Portfolio",
+        "Page 2: About BBA Architects, our mission, and our expertise",
+        "Page 3: Heather Court at Nottingham Village, memory care",
+        "Page 4: Physical Therapy at Nottingham Village",
+        "Page 5: Wolf Run nursing home",
+        "Page 6: The Grove at Thomson Farms apartments",
+        "Page 7: Ogden Junction mixed-use retail and apartments",
+        "Page 8: Midvale Junction condominiums",
+        "Back cover: Thank you, next steps, and BBA contact information"
+      ],
+      "folder": "brochures/multifamily/pages"
+    },
+    {
+      "id": "long-term-care",
+      "title": "Long-term Care",
+      "sector": "long-term care",
+      "also": [
+        "healthcare",
+        "multifamily housing"
+      ],
+      "visible": true,
+      "description": "Memory care, assisted living, and nursing homes designed for dignity and wayfinding, including Heather Court’s 48-bed neighborhood model and the 34,000 sq ft Wolf Run.",
+      "pdf": "brochures/long-term-care/BBA-long-term-care.pdf",
+      "pages": [
+        "Cover: Long-term Care, Introduction and Brief Portfolio",
+        "Page 2: About BBA Architects, our mission, and our expertise",
+        "Page 3: Heather Court at Nottingham Village, assisted living and memory care",
+        "Page 4: Physical Therapy at Nottingham Village",
+        "Page 5: Wolf Run nursing home",
+        "Back cover: Thank you, next steps, and BBA contact information"
+      ],
+      "folder": "brochures/long-term-care/pages"
+    },
+    {
+      "id": "financial-buildings",
+      "title": "Financial Buildings",
+      "sector": "financial buildings",
+      "visible": true,
+      "description": "Branch offices and headquarters for Pinpoint Federal Credit Union and Service 1st Credit Union, plus Zions Bank branch prototypes led by our principal.",
+      "pdf": "brochures/financial-buildings/BBA-financial-buildings.pdf",
+      "pages": [
+        "Cover: Financial Buildings, Introduction and Brief Portfolio",
+        "Page 2: About BBA Architects, our mission, and our expertise",
+        "Page 3: Pinpoint Federal Credit Union new branch office",
+        "Page 4: Zions Bank prototyping and new branches",
+        "Page 5: Service 1st Credit Union new branch office",
+        "Back cover: Thank you, next steps, and BBA contact information"
+      ],
+      "folder": "brochures/financial-buildings/pages"
+    },
+    {
+      "id": "healthcare",
+      "title": "Healthcare",
+      "sector": "healthcare",
+      "visible": true,
+      "description": "Hospital renovations for Evangelical Community Hospital, one of Pennsylvania’s first biocontainment units for Geisinger Health System, and a new orthodontics clinic.",
+      "pdf": "brochures/healthcare/BBA-healthcare.pdf",
+      "pages": [
+        "Cover: Healthcare, Introduction and Brief Portfolio",
+        "Page 2: About BBA Architects, our mission, and our expertise",
+        "Page 3: Evangelical Community Hospital administration suite",
+        "Page 4: Evangelical Community Hospital MRI unit",
+        "Page 5: Geisinger Health System biocontainment unit",
+        "Page 6: Richards Orthodontics new clinic",
+        "Back cover: Thank you, next steps, and BBA contact information"
+      ],
+      "folder": "brochures/healthcare/pages"
+    },
+    {
+      "id": "resort-hospitality",
+      "title": "Resort & Hospitality",
+      "sector": "resort & hospitality",
+      "visible": false,
+      "drawing": "roof",
+      "description": "Mountain lodges and destination buildings in wood and stone, designed to belong to their landscape and stand up to its seasons.",
+      "pages": []
+    },
+    {
+      "id": "retail-restaurant",
+      "title": "Retail & Restaurant",
+      "sector": "retail & restaurant",
+      "visible": false,
+      "drawing": "store",
+      "description": "Dealerships, storefronts, and restaurants that carry a brand to the street and move customers easily from the parking lot to the front door.",
+      "pages": []
+    },
+    {
+      "id": "master-site-planning",
+      "title": "Master & Site Planning",
+      "sector": "master & site planning",
+      "visible": false,
+      "drawing": "site",
+      "description": "Site and master plans that settle access, phasing, and utilities early, so every building that follows goes up on schedule.",
+      "pages": []
+    },
+    {
+      "id": "custom-residential",
+      "title": "Custom Residential",
+      "sector": "custom residential",
+      "visible": false,
+      "drawing": "gable",
+      "description": "Custom homes designed around how one family lives, with a principal at the table from first sketch to final walkthrough.",
+      "pages": []
+    },
+    {
+      "id": "light-industrial",
+      "title": "Light Industrial",
+      "sector": "light industrial",
+      "visible": false,
+      "drawing": "saw",
+      "description": "Warehouse, flex, and shop buildings designed for efficiency: clear spans, simple envelopes, and details local crews already know.",
+      "pages": []
+    }
+  ]
+}

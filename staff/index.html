@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff: brochure library | BBA</title>
+<meta name="description" content="Brochures from Bringhurst &amp; Baer Architects: commercial, multifamily, long-term care, financial, and healthcare work.">
+<link rel="icon" href="/assets/img/bba-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-mode="staff">
+<div class="staff-bar"><div class="wrap">
+<span>Staff view: every brochure, including hidden ones. <span id="hidden-note"></span></span>
+<span><a href="/">See the public library</a>&nbsp;&nbsp;<a href="/.auth/logout?post_logout_redirect_uri=/">Sign out</a></span>
+</div></div>
+<header class="wrap site-header">
+<a href="https://www.bbaarchitect.com"><img src="/assets/img/bba-logo.png" alt="Bringhurst &amp; Baer Architects home"></a>
+<nav class="site-nav" aria-label="Main">
+<a href="https://www.bbaarchitect.com/portfolio-1">portfolio</a>
+<a href="https://www.bbaarchitect.com/services">services</a>
+<a href="https://www.bbaarchitect.com/about">about</a>
+<a href="/">brochures</a>
+<a href="https://www.bbaarchitect.com/contact">contact</a>
+<!-- Add when Document Control is live: <a class="login" href="https://portal.bbaarchitect.com">client login</a> -->
+</nav>
+</header>
+<main class="wrap" style="padding-top:48px;padding-bottom:104px;display:flex;flex-direction:column;gap:40px">
+<div>
+<h1 class="display" style="font-size:clamp(44px,6vw,72px)">brochures, staff</h1>
+<p class="lede">To show or hide a brochure, change its <code>"visible"</code> line in <code>brochures.json</code> on GitHub and commit. The site updates in a minute or two. Hidden brochures open here for review but never appear on the public page.</p>
+</div>
+<div id="filters" class="filters" role="group" aria-label="Filter by market"></div>
+<div id="grid" class="grid" aria-live="polite"></div>
+<p id="empty" class="empty" hidden>No brochures in this market.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:460px">
+<img src="/assets/img/bba-logo-reversed.png" alt="Bringhurst &amp; Baer Architects">
+<p style="margin:0">Every project, every phase, includes a principal. Prefer a printed copy? <a href="https://www.bbaarchitect.com/contact">Request one</a>.</p>
+</div>
+<address>
+<span>16 E Main Street, American Fork, UT 84003</span>
+<a href="tel:+13852480660">385 248 0660</a>
+<a href="https://www.bbaarchitect.com">bbaarchitect.com</a>
+</address>
+<p class="legal">Registered, Licensed, Insured, Professional Architects.</p>
+</div>
+</footer>
+<script src="/assets/js/library.js"></script>
+</body>
+</html>

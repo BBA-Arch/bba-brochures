@@ -1,0 +1,67 @@
+{
+  "routes": [
+    {
+      "route": "/staff/preview",
+      "rewrite": "/viewer.html",
+      "allowedRoles": [
+        "staff"
+      ]
+    },
+    {
+      "route": "/staff",
+      "allowedRoles": [
+        "staff"
+      ]
+    },
+    {
+      "route": "/staff/*",
+      "allowedRoles": [
+        "staff"
+      ]
+    },
+    {
+      "route": "/brochures/drafts/*",
+      "allowedRoles": [
+        "staff"
+      ]
+    },
+    {
+      "route": "/login",
+      "rewrite": "/.auth/login/aad"
+    },
+    {
+      "route": "/.auth/login/github",
+      "statusCode": 404
+    },
+    {
+      "route": "/.auth/login/twitter",
+      "statusCode": 404
+    },
+    {
+      "route": "/brochures.json",
+      "headers": {
+        "cache-control": "no-cache"
+      }
+    },
+    {
+      "route": "/brochures/*",
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
+    }
+  ],
+  "responseOverrides": {
+    "401": {
+      "redirect": "/.auth/login/aad?post_login_redirect_uri=.referrer",
+      "statusCode": 302
+    },
+    "404": {
+      "rewrite": "/404.html"
+    }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.hsforms.com; frame-ancestors 'self' https://www.bbaarchitect.com https://bbaarchitect.com"
+  }
+}
