@@ -1,0 +1,7 @@
+{
+  "name": "bba-brochures-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Brochure visibility switches for brochures.bbaarchitect.com",
+  "engines": { "node": ">=20" }
+}

@@ -193,12 +193,17 @@
     });
   }
 
-  fetch('/brochures.json', { cache: 'no-cache' })
-    .then(function (r) { return r.json(); })
-    .then(function (d) {
+  var overrides = fetch('/api/visibility', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : { overrides: {} }; })
+    .catch(function () { return { overrides: {} }; });
+  Promise.all([fetch('/brochures.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }), overrides])
+    .then(function (res) {
+      var d = res[0], o = (res[1] && res[1].overrides) || {};
       b = d.brochures.filter(function (x) { return x.id === id; })[0];
       if (!b || !b.pages || !b.pages.length) return missing('That brochure isn’t available. <a href="/">See all brochures</a>.');
-      if (!b.visible && !isStaff) return missing('That brochure isn’t available yet. <a href="/">See all brochures</a>.');
+      var ov = o[b.id];
+      var visible = ov === undefined ? !!b.visible : (typeof ov === 'object' ? !!ov.visible : !!ov);
+      if (!visible && !isStaff) return missing('That brochure isn’t available yet. <a href="/">See all brochures</a>.');
       build(); wire(); setZoom(1); render();
     })
     .catch(function () { missing('The brochure didn’t load. Please refresh the page.'); });

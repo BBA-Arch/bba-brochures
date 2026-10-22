@@ -8,6 +8,8 @@
   var empty = document.getElementById('empty');
   var current = 'all';
   var data = null;
+  var overrides = {};
+  var busy = {};
 
   var DRAWINGS = {
     roof: '<path d="M4 58 L60 30 L116 58"/><rect x="20" y="58" width="80" height="22"/><line x1="44" y1="58" x2="44" y2="80"/><line x1="76" y1="58" x2="76" y2="80"/><line x1="4" y1="80" x2="116" y2="80"/>',
@@ -19,6 +21,17 @@
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
   function ready(b) { return b.pages && b.pages.length > 0; }
+  function isVisible(b) {
+    var o = overrides[b.id];
+    if (o === undefined) return !!b.visible;
+    return typeof o === 'object' ? !!o.visible : !!o;
+  }
+  function changedNote(b) {
+    var o = overrides[b.id];
+    if (!o || typeof o !== 'object' || !o.at) return '';
+    var when = new Date(o.at);
+    return 'Changed ' + when.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) + (o.by ? ' by ' + o.by : '');
+  }
   function matches(b) { return current === 'all' || b.sector === current || (b.also || []).indexOf(current) >= 0; }
 
   function card(b) {
@@ -27,28 +40,71 @@
       ? '<img class="photo" src="/' + esc(b.folder) + '/p01.jpg" alt="" loading="lazy">'
       : '<img class="logo" src="/assets/img/bba-logo-reversed.png" alt=""><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' + (DRAWINGS[b.drawing] || DRAWINGS.gable) + '</svg><div class="t">' + esc(b.title) + '</div>';
     var inner = '<div class="cover">' + cover + '</div><div style="display:flex;flex-direction:column;gap:8px"><h3>' + esc(b.title) + '</h3><p>' + esc(b.description) + '</p>' + (href ? '<span class="read">Read online</span>' : '') + '</div>';
-    var status = staff ? (b.visible ? '<span class="status on">Visible to clients</span>' : '<span class="status off">Hidden from clients' + (ready(b) ? '' : ', PDF needed') + '</span>') : '';
-    var body = href ? '<a href="' + href + '">' + inner + '</a>' : '<div>' + inner + '</div>';
-    return '<div class="card' + (staff && !b.visible ? ' hidden' : '') + '">' + body + status + '</div>';
+    var vis = isVisible(b);
+    var status = '';
+    if (staff) {
+      var label = vis ? 'Visible to clients' : 'Hidden from clients';
+      status = ready(b)
+        ? '<button type="button" class="switch" role="switch" data-id="' + esc(b.id) + '" aria-checked="' + vis + '"' + (busy[b.id] ? ' disabled' : '') + '><span class="track" aria-hidden="true"><span class="knob"></span></span><span>' + label + '</span></button>' +
+          (changedNote(b) ? '<span class="changed">' + esc(changedNote(b)) + '</span>' : '')
+        : '<span class="status off">Hidden, PDF needed</span>';
+    }
+    var body = href ? '<a href="' + href + '">' + inner + '</a>' : '<div class="body">' + inner + '</div>';
+    return '<div class="card' + (staff && !vis ? ' hidden' : '') + '">' + body + status + '</div>';
   }
 
   function render() {
-    var list = data.brochures.filter(function (b) { return (staff || (b.visible && ready(b))) && matches(b); });
+    var list = data.brochures.filter(function (b) { return (staff || (isVisible(b) && ready(b))) && matches(b); });
     grid.innerHTML = list.map(card).join('');
     empty.hidden = list.length > 0;
     Array.prototype.forEach.call(filters.querySelectorAll('button'), function (btn) {
       btn.setAttribute('aria-pressed', btn.getAttribute('data-sector') === current ? 'true' : 'false');
     });
     if (staff) {
-      var n = data.brochures.filter(function (b) { return !b.visible; }).length;
+      var n = data.brochures.filter(function (b) { return !isVisible(b); }).length;
       var note = document.getElementById('hidden-note');
       if (note) note.textContent = n === 1 ? '1 brochure hidden from clients' : n + ' brochures hidden from clients';
     }
   }
 
-  fetch('/brochures.json', { cache: 'no-cache' })
-    .then(function (r) { return r.json(); })
-    .then(function (d) {
+  function say(msg) {
+    var el = document.getElementById('switch-msg');
+    if (el) el.textContent = msg;
+  }
+
+  if (staff) {
+    grid.addEventListener('click', function (e) {
+      var sw = e.target.closest('.switch');
+      if (!sw || sw.disabled) return;
+      var id = sw.getAttribute('data-id');
+      var b = data.brochures.filter(function (x) { return x.id === id; })[0];
+      var next = !isVisible(b);
+      var before = overrides[id];
+      overrides[id] = { visible: next };
+      busy[id] = true;
+      render();
+      fetch('/api/visibility', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id, visible: next }) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); })
+        .then(function (j) {
+          overrides[id] = j.override;
+          say(b.title + (next ? ' is now visible to clients.' : ' is now hidden from clients.'));
+        })
+        .catch(function (err) {
+          if (before === undefined) delete overrides[id]; else overrides[id] = before;
+          say('Couldn’t change ' + b.title + ': ' + err.message);
+        })
+        .then(function () { delete busy[id]; render(); var again = grid.querySelector('.switch[data-id="' + id + '"]'); if (again) again.focus(); });
+    });
+  }
+
+  var overrideReq = fetch('/api/visibility', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : { overrides: {} }; })
+    .catch(function () { return { overrides: {} }; });
+
+  Promise.all([fetch('/brochures.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }), overrideReq])
+    .then(function (res) {
+      var d = res[0];
+      overrides = (res[1] && res[1].overrides) || {};
       data = d;
       var sectors = ['all'].concat(d.sectors);
       filters.innerHTML = sectors.map(function (s) {

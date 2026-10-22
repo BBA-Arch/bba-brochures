@@ -30,7 +30,8 @@
 <main class="wrap" style="padding-top:48px;padding-bottom:104px;display:flex;flex-direction:column;gap:40px">
 <div>
 <h1 class="display" style="font-size:clamp(44px,6vw,72px)">brochures, staff</h1>
-<p class="lede">To show or hide a brochure, change its <code>"visible"</code> line in <code>brochures.json</code> on GitHub and commit. The site updates in a minute or two. Hidden brochures open here for review but never appear on the public page.</p>
+<p class="lede">Use the switch under each brochure to show or hide it on the public library. Changes take effect immediately. Hidden brochures still open here for review.</p>
+<p id="switch-msg" role="status" style="margin:12px 0 0;font-size:15px;color:var(--brand-deep)"></p>
 </div>
 <div id="filters" class="filters" role="group" aria-label="Filter by market"></div>
 <div id="grid" class="grid" aria-live="polite"></div>

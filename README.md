@@ -14,6 +14,7 @@ Static site for **brochures.bbaarchitect.com**, hosted on Azure Static Web Apps.
 | `brochures/<id>/BBA-<id>.pdf` | Web-sized PDF for download |
 | `site-config.js` | HubSpot form IDs and contact details |
 | `staticwebapp.config.json` | Azure security rules: staff-only pages, sign-in, caching, headers |
+| `api/visibility/` | Small API behind the staff visibility switches |
 | `assets/` | Styles, scripts, logos |
 
 ## First deployment
@@ -30,11 +31,24 @@ Static site for **brochures.bbaarchitect.com**, hosted on Azure Static Web Apps.
 
 ## Show or hide a brochure
 
-Open `brochures.json` on GitHub, click the pencil icon, change `"visible": true` to `false` (or back), and **Commit changes**. The site updates in about a minute.
+Sign in at `/staff/` and use the switch under each brochure. Changes take effect immediately, and each card shows who changed it and when.
 
-Hidden brochures disappear from the public library and their viewer link says "not available yet." Staff can still open them from `/staff/`.
+The `"visible"` line in `brochures.json` is the starting value for a brochure that has never been switched. Once a switch is used, the switch wins.
 
 **Note:** hiding removes a brochure from the site, but its image files stay at their web addresses. For anything confidential, keep its files under `brochures/drafts/<id>/` (set `"folder"` and `"pdf"` to match). That folder is staff-only.
+
+## Visibility switches: one-time setup
+
+The switches save to a small file in Azure Storage through the site's API (`api/visibility`).
+
+1. **Storage account.** Azure portal → **Create a resource → Storage account**. Resource group `bba-website`, a lowercase name such as `bbabrochuresettings`, same region as the site, Performance **Standard**, Redundancy **LRS**. Create.
+2. **Container.** In the storage account: **Data storage → Containers → + Container**, name `settings`, access level **Private**.
+3. **Seed file.** Open `settings` → **Upload** → `visibility.json` (contains `{ "overrides": {} }`).
+4. **Access link.** Click `visibility.json` → **Generate SAS**. Permissions **Read** and **Write**. Expiry: two years out (put a calendar reminder to renew). **Generate SAS token and URL**, then copy the **Blob SAS URL**.
+5. **Site setting.** Static Web App → **Settings → Environment variables → + Add**. Name `VISIBILITY_BLOB_URL`, value: the Blob SAS URL. **Apply**.
+6. **Turn on the API.** In GitHub, open `.github/workflows/azure-static-web-apps-….yml`, click the pencil, change `api_location: ""` to `api_location: "api"`, and commit.
+
+When the SAS link expires, the switches stop saving (the public site keeps working from `brochures.json`). Generate a new SAS URL and paste it into the same environment variable.
 
 ## Add a new brochure
 
